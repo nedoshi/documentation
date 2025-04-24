@@ -18,6 +18,7 @@ description: "Step-by-step tutorials from Red Hat experts to help you get the mo
 * [Securely exposing an application on a private ROSA cluster with a Network Load Balancer](/experts/rosa/hcp-private-nlb/)
 * [Add an Ingress Controller to ROSA with a custom domain](/experts/rosa/ingress-controller)
 * [Configuring Microsoft Entra ID as an external authentication provider](/experts/rosa/entra-external-auth)
+* [Optimizing Costs with ROSA: Scheduled Cluster Scaling](/experts/rosa/schedule-scaling)
 
 #### Classic
 
@@ -151,6 +152,7 @@ description: "Step-by-step tutorials from Red Hat experts to help you get the mo
 * [Shipping logs and metrics to Azure Blob storage](/experts/aro/shipping-logs-and-metrics-to-azure-blob)
 * [Use AWS CloudWatch Agent to push prometheus metrics to AWS CloudWatch](/experts/rosa/metrics-to-cloudwatch-agent)
 * [Installing and configuring LokiStack on ROSA](/experts/o11y/openshift-logging-lokistack)
+* [Configuring Cluster Observability Operator (COO) in ARO and Enabling remote writing of metrics to Azure Monitor Workspace](/experts/o11y/openshift-coo-azuremonitor)
 
 ## Security
 
@@ -193,6 +195,7 @@ description: "Step-by-step tutorials from Red Hat experts to help you get the mo
 * [Deploy OpenShift Advanced Data Protection on a ROSA STS cluster](/experts/misc/oadp/rosa-sts/)
 * [Azure DevOps with Managed OpenShift](/experts/misc/azure-dev-ops-with-managed-openshift/)
 * [Configuring OpenShift Dev Spaces to serve Custom Domains](/experts/misc/devspaces-custom-domain)
+* [Setting up Cross-Cluster PostgreSQL Replication with Skupper on ROSA and ARO](/experts/misc/rosa-aro-service-interconnect)
 
 ### Applications
 
