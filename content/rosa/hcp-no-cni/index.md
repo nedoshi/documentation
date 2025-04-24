@@ -238,6 +238,7 @@ fsGroup:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:kube-system:aws-node
+- system:serviceaccount:amazon-vpc-cni:aws-node
 EOF
 ```
+
