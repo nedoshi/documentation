@@ -15,9 +15,13 @@ In this guide, you will:
 - Observe automatic scale-down after the workload is removed
 - Learn how to troubleshoot common scale-down blockers
 
-> **Note:** Scale-to-zero is only available on **ROSA HCP** clusters. It is not supported on ROSA Classic.
+{{% alert state="info" %}}
+Scale-to-zero is only available on **ROSA HCP** clusters. It is not supported on ROSA Classic.
+{{% /alert %}}
 
-> **Important:** ROSA HCP currently requires a minimum of **2 non-tainted worker nodes** per cluster at all times. The OCM API enforces this by requiring the sum of `min_replica` across all non-tainted node pools to be at least 2. You cannot scale all node pools to zero — scale-to-zero is intended for **additional workload pools** (e.g. burst capacity, dev/test), while your base pools maintain the minimum worker capacity for system pods (ingress, monitoring, registry). See [Minimum Replica Constraint](#minimum-replica-constraint) for details.
+{{% alert state="danger" %}}
+ROSA HCP currently requires a minimum of **2 non-tainted worker nodes** per cluster at all times. The OCM API enforces this by requiring the sum of `min_replica` across all non-tainted node pools to be at least 2. You cannot scale all node pools to zero. Scale-to-zero is intended for **additional workload pools** (e.g. burst capacity, dev/test), while your base pools maintain the minimum worker capacity for system pods (ingress, monitoring, registry). See [Minimum Replica Constraint](#minimum-replica-constraint) for details.
+{{% /alert %}}
 
 ## Prerequisites
 
@@ -83,7 +87,8 @@ Scale-to-zero cannot be configured via the ROSA CLI or the Red Hat console today
     EOF
     ```
 
-    > **Note:** The OCM API uses singular `min_replica` / `max_replica` for HCP node pools. The taint prevents system pods from landing on this node pool, which avoids scale-down blockers (explained in [Troubleshooting](#troubleshooting)).
+    {{% alert state="info" %}}The OCM API uses singular `min_replica` / `max_replica` for HCP node pools. The taint prevents system pods from landing on this node pool, which avoids scale-down blockers (explained in [Troubleshooting](#troubleshooting)).
+    {{% /alert %}}
 
 1. Verify the node pool was created and has 0 current replicas.
 
@@ -143,7 +148,9 @@ Scale-to-zero cannot be configured via the ROSA CLI or the Red Hat console today
     }
     ```
 
-    > **Note:** The Terraform RHCS provider uses plural `min_replicas` / `max_replicas`.
+    {{% alert state="info" %}}
+    The Terraform RHCS provider uses plural `min_replicas` / `max_replicas`.
+    {{% /alert %}}
 
 1. Apply the configuration.
 
@@ -166,7 +173,9 @@ ocm patch /api/clusters_mgmt/v1/clusters/$CLUSTER_ID/node_pools/<pool-id> <<'EOF
 EOF
 ```
 
-> **Note:** This will only be accepted if the [minimum replica constraint](#minimum-replica-constraint) is still satisfied after the change.
+{{% alert state="info" %}}
+This will only be accepted if the [minimum replica constraint](#minimum-replica-constraint) is still satisfied after the change.
+{{% /alert %}}
 
 ## Deploy a Test Workload to Trigger Scale-Up
 
@@ -302,7 +311,8 @@ When the workload is removed, the cluster autoscaler will detect the node as idl
 
     The total time from workload deletion to node removal is typically **~17 minutes**.
 
-    > **Note:** This was verified by deleting a workload from a node that had been running for over 15 minutes (ensuring any `delay_after_add` cooldown had fully expired). The ~15-minute idle assessment is a ROSA HCP platform-managed default and cannot be changed by the user.
+    {{% alert state="info" %}}This was verified by deleting a workload from a node that had been running for over 15 minutes (ensuring any `delay_after_add` cooldown had fully expired). The ~15-minute idle assessment is a ROSA HCP platform-managed default and cannot be changed by the user.
+    {{% /alert %}}
 
 1. Verify the node pool has scaled back to 0.
 
@@ -325,7 +335,8 @@ When the workload is removed, the cluster autoscaler will detect the node as idl
     | Idle assessment | ~15 minutes | How long a node must be continuously idle before removal is triggered |
     | Drain + removal | ~2 minutes | Time to evict pods and terminate the EC2 instance |
 
-    > **Note:** On ROSA HCP, the `scale_down` parameters (such as `unneeded_time`, `delay_after_add`, `utilization_threshold`) **cannot be customized**. The OCM API rejects `scale_down` configuration changes with `"Attribute 'scale_down' is not allowed"`. These settings are only configurable on ROSA Classic clusters.
+    {{% alert state="warning" %}}On ROSA HCP, the `scale_down` parameters (such as `unneeded_time`, `delay_after_add`, `utilization_threshold`) **cannot be customized**. The OCM API rejects `scale_down` configuration changes with `"Attribute 'scale_down' is not allowed"`. These settings are only configurable on ROSA Classic clusters.
+    {{% /alert %}}
 
 ## Minimum Replica Constraint
 
@@ -417,7 +428,8 @@ For example, given a cluster with three non-tainted pools (`compute-0`, `compute
       cluster-autoscaler.kubernetes.io/safe-to-evict=true --overwrite
     ```
 
-    > **Note:** If the pod is managed by an operator, the annotation will be reset when the pod is recreated. Consider uninstalling the operator or configuring it to not set this annotation.
+    {{% alert state="warning" %}}If the pod is managed by an operator, the annotation will be reset when the pod is recreated. Consider uninstalling the operator or configuring it to not set this annotation.
+    {{% /alert %}}
 
 ### System Pods and PodDisruptionBudgets
 

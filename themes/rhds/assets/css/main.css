@@ -1161,6 +1161,14 @@ rh-alert:not(.site-disclaimer) {
   width: 100%;
 }
 
+/* Markdown tables (render hook): same measure as :is(h1,…), p, rh-alert */
+rh-table {
+  box-sizing: border-box;
+  display: block;
+  max-width: 60rem;
+  width: 100%;
+}
+
 rh-blockquote {
   display: block;
   margin-block: var(--rh-space-xl, 24px);
