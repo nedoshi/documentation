@@ -219,7 +219,7 @@ As a bonus it will set up a CloudWatch datasource to view any metrics or logs yo
     aws-prometheus-proxy mobb/rosa-aws-prometheus
     ```
 
-1. Enable monitoring for user-defined projects if it is not already enabled. The procedure is documented in the *Monitoring* collection for your OpenShift version; for reference, see [Enabling monitoring for user-defined projects](https://docs.redhat.com/en/documentation/openshift_container_platform/4.12/html/monitoring/enabling-monitoring-for-user-defined-projects) (the same `enableUserWorkload` setting applies in current releases). User workload monitoring must be running before the `user-workload-monitoring-config` ConfigMap below takes effect. For example, if `cluster-monitoring-config` in `openshift-monitoring` is empty or only sets defaults, you can apply:
+1. Enable monitoring for user-defined projects if it is not already enabled. The procedure is documented in the *Monitoring* collection for your OpenShift version; for reference, see [Enabling monitoring for user-defined projects](https://docs.redhat.com/en/documentation/monitoring_stack_for_red_hat_openshift/4.20/html/configuring_user_workload_monitoring/preparing-to-configure-the-monitoring-stack-uwm) 
 
     ```bash
     cat << EOF | oc apply -f -
@@ -234,7 +234,6 @@ As a bonus it will set up a CloudWatch datasource to view any metrics or logs yo
     EOF
     ```
 
-    If `cluster-monitoring-config` already contains other settings, merge `enableUserWorkload: true` into `data.config.yaml` by hand instead of replacing the whole object.
 
 1. Configure remoteWrite for user workloads
 
